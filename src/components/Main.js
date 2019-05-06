@@ -2,14 +2,38 @@ import React, { Component } from "react";
 import List from "./List";
 
 export default class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = [];
+  }
+
+  componentDidMount() {
+    this.doFetch();
+  }
+
+  doFetch() {
+    fetch("https://dci-fbw12-search-itunes.now.sh/?term=${search}")
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+      .then(songs => {
+        this.setState(state => {
+          state.songs = songs;
+          return state;
+        });
+      });
+  }
+
   render() {
+    const { songs } = this.state;
     return (
-      <div class="main row">
+      <div className="main row">
         <header>
           <input type="text" name="filter" placeholder=" &#x1F50E; search" />
           <br />
           <input
-            class="request"
+            className="request"
             type="text"
             name="filter"
             placeholder=" &#x1F50E; global search"
@@ -26,7 +50,7 @@ export default class Main extends Component {
           </select>
         </header>
 
-        <List />
+        <List songs={songs} />
       </div>
     );
   }
