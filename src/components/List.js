@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import Songs from "./Songs";
 
 export default class List extends Component {
-  render(props) {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const tracks = this.props.tracks;
     return (
-      <div className="col-sm-6 col-md-6 col-lg-6" id="list">
-        there's gonna be the songs under this
-        {/* have to map Songs at one point */}
-        <Songs />
+      <div className="col-sm-6 col-md-6 col-lg-6 list">
+        {tracks.map((trackInfo, index) => (
+          <Songs trackInfo={trackInfo} key={index} />
+        ))}
       </div>
     );
   }
